@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <style>
+        body{
+            width: 100%;
+            height: 100%;
+        }
+        .todocontainer{
+            width: 50%;
+            height: 100%;
+            margin-top: 50px;
+            margin-inline: 25%;
+            background: linear-gradient(to bottom,rgb(3, 251, 234),rgb(0, 0, 108));
+            border-radius: 10px;
+        }
+        h1{
+            text-align: center;
+            padding-top: 30px;
+            padding: 20px;
+            color: #140264;
+        }
+        .inputbox{
+            padding-inline: 25%;
+        }
+        input{
+            width: 250px;
+            height: 30px;
+            border: none;
+            border-radius: 5px;
+        }
+        .number{
+            width: 100%;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            justify-content: space-around;
+        }
+        button{
+            width: 80px;
+            height: 35px;
+            border-radius: 5px;
+            border: none;
+            background-color: red;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 600
+        }
+        ul{
+            margin-top: 10px;
+            padding-inline: 30px;
+            padding-block: 10px;
+            list-style: none;
+            color: #000;
+            font-size: 20px;
+            align-items: center;
+        }
+        li{
+            background: #f8f9fa;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+        }
+        li.completed{
+            text-decoration: line-through;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="todocontainer">
+        <h1>My To-Do List</h1>
+        <div class="inputbox">
+            <input type="text" id="inputbox" placeholder="Enter Your Todo here.....">
+            <button type="submit" id="addbtn" style="background-color: green;">Add</button>
+        </div>
+        <div class="number">
+            <p style="color: #fff;font-size: 20px;font-weight: 600;">No.of todo's : <span id="count">0</span></p>
+            <button id="removeall">Clear all</button>
+        </div>
+        <ul id="list">
+
+        </ul>
+    </div>
+
+    <script>
+        const inputbox = document.getElementById("inputbox");
+        const addbtn = document.getElementById("addbtn");
+        const todolist = document.getElementById("list");
+        const countNo = document.getElementById("count");
+        const removeallBtn = document.getElementById("removeall");
+
+        function addTodo(){
+            const inputText = inputbox.value.trim();
+            if(inputText === ""){
+                alert("Your todo contain atleast one character");
+                return false;
+            }
+
+            const li = document.createElement("li");
+            li.textContent = inputText;
+
+            const deleteBtn = document.createElement("button");
+            deleteBtn.textContent = "Remove";
+            deleteBtn.style.marginLeft = "10px";
+
+            deleteBtn.addEventListener('click',()=>{
+                li.remove();
+                updatecount();
+            });
+
+            li.appendChild(deleteBtn);
+            
+
+            todolist.appendChild(li);
+            inputbox.value="";
+
+            updatecount();
+
+        }
+        function updatecount(){
+            const total = todolist.getElementsByTagName("li").length;
+            countNo.textContent=total;
+        }
+
+        function removelist(){
+            todolist.innerHTML = "";
+            updatecount();
+        }
+
+        addbtn.addEventListener('click',addTodo);
+        removeallBtn.addEventListener('click',removelist);
+    </script>
+</body>
+</html>
